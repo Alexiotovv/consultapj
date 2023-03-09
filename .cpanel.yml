@@ -1,7 +1,7 @@
 ---
   deployment:
     tasks:
-      - export DEPLOYPATH=/home/gorel/public_html/consultapj.regionloreto.gob.pe/
+      - export DEPLOYPATH=/home/gorel/public_html/consultaqr.regionloreto.gob.pe/
       - /bin/rsync -av public/ $DEPLOYPATH
-      - export DEPLOYPATH=/home/gorel/consultapj/
+      - export DEPLOYPATH=/home/gorel/consultaqr/
       - /bin/rsync -av ./ $DEPLOYPATH
