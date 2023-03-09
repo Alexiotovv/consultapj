@@ -1,0 +1,8 @@
+---
+  deployment:
+    tasks:
+      - export DEPLOYPATH=/home/gorel/public_html/oredis.regionloreto.gob.pe/
+      - /bin/rsync -av public/ $DEPLOYPATH
+      - export DEPLOYPATH=/home/gorel/oredis/
+      - /bin/rsync -av ./ $DEPLOYPATH
+
