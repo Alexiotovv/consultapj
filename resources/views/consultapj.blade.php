@@ -48,10 +48,12 @@
                         </div>
                     </div>
                 </div>
+                
 
                 <div class="col-md-6" style="text-align: -webkit-center;">
                     <div class="card" style="min-height: 385px;">
                         <div class="card-header">
+                            {{-- <img src="../img/regionloreto.png" id="img-buffer"> --}}
                             <h5>Código QR Generado</h5>
                         </div>
                         <div class="card-body">
@@ -84,9 +86,17 @@
                 </div>
             </div>
         </div>
+        <br>
     </div>
     <!-- end modal -->
     
+    <div class="container">
+        <br>
+        <iframe id="pagina" style="width: 100%; height:2900px;margin-top:-400px;margin-bottom:-400px;" src="" frameborder="0"></iframe>
+    </div>
+    
+
+
 
     <script src="../js/jquery.js"></script>
     <script src="../js/jquery-qrcode-0.18.0.js"></script>
@@ -128,17 +138,19 @@
                         $("#txtTipoInversion").val(element['tipoinversion']);
                         url = "https://ofi5.mef.gob.pe/inviertews/Repseguim/ResumF12B?codigo=" + $(
                             "#txtCodigo").val();
+                        $("#pagina").prop('src',url);
                         
                         $("#CodigoQR").qrcode({
                             render: 'image',
-                            mode: 2,
-                            label: "",
+                            mode: 4, // 0: normal // 1: label strip // 2: label box // 3: image strip // 4: image box
+                            label: "-",
                             width: 150,
                             height: 150,
                             size: 250,
                             radius: 0.5,
                             color: '#000',
                             text: url,
+                            image:"",
                         });
                         $("#EtiquetaQR").text(url);
                         $("#btnDescargar").attr('hidden',false);
@@ -170,6 +182,7 @@
                 },
                 success: function(response) {
                     datos = response;
+                    console.log(response);
                     $("#spinner").removeClass("spinner-border");
                 }
             });
