@@ -55,10 +55,16 @@
                         <div class="card-header">
                             {{-- <img src="../img/regionloreto.png" id="img-buffer"> --}}
                             <h5>Código QR Generado</h5>
+                            
+
+
                         </div>
                         <div class="card-body">
+                            
                             <div id="CodigoQR">
+                                {{-- <img id="imgbuffer" src="" alt=""> --}}
                                 {{-- Aqui va el código QR --}}
+
                             </div>
                             <label for="" id="EtiquetaQR"></label>
                             <a id="btnDescargar" download="" class="btn btn-primary" style="width: 50%;" hidden><i class="bi-download"></i> Descargar</a>
@@ -101,6 +107,8 @@
     <script src="../js/jquery.js"></script>
     <script src="../js/jquery-qrcode-0.18.0.js"></script>
     <script src="../js/jquery-qrcode-0.18.0.min.js"></script>
+    {{-- <script src="../js/kjua/kjua.js"></script> --}}
+
     <script src="../js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 
     <script>
@@ -143,15 +151,51 @@
                         $("#CodigoQR").qrcode({
                             render: 'image',
                             mode: 4, // 0: normal // 1: label strip // 2: label box // 3: image strip // 4: image box
-                            label: "-",
+                            label: "",
                             width: 150,
                             height: 150,
                             size: 250,
                             radius: 0.5,
+                            
+                            mSize: 50,
+                            mPosX: 50,
+                            mPosY: 50,
+
                             color: '#000',
                             text: url,
-                            image:"",
+                            // image: source,
                         });
+
+                        // $("#CodigoQR").kjua({
+                        //     render:'image',
+                        //     text: url,
+                        //     // mode: 'image',
+                        //     mSize: 40,
+                        //     mPosx: 50,
+                        //     mPosy: 50,
+                        //     // image: 'data:img/regionloreto.png' 
+                        // })
+
+                        $("#CodigoQR").css('display','flex');
+                        $("#CodigoQR").css('justify-content','center');
+                        $("#CodigoQR").css('align-items','center');
+                        // $("#img-buffer").attr('src','img/regionloreto.png');
+                    
+
+                        var image = new Image();
+                        image.src = 'img/regionloreto.png';
+                        image.id='buffer-img'
+                        $('#CodigoQR').append(image);
+
+                        $("#buffer-img").css('position','absolute');
+                        $("#buffer-img").css('margin-left','auto');
+                        $("#buffer-img").css('margin-right','auto');
+                        // $("#buffer-img").css('display', 'block');
+
+                        $("#buffer-img").css('width','50px');
+                        $("#buffer-img").css('height','50px');
+                        
+
                         $("#EtiquetaQR").text(url);
                         $("#btnDescargar").attr('hidden',false);
                     }
@@ -182,7 +226,7 @@
                 },
                 success: function(response) {
                     datos = response;
-                    console.log(response);
+                    // console.log(response);
                     $("#spinner").removeClass("spinner-border");
                 }
             });
