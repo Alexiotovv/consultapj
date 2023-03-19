@@ -49,23 +49,21 @@
                     </div>
                 </div>
                 
+                
+                
 
                 <div class="col-md-6" style="text-align: -webkit-center;">
                     <div class="card" style="min-height: 385px;">
                         <div class="card-header">
                             {{-- <img src="../img/regionloreto.png" id="img-buffer"> --}}
                             <h5>Código QR Generado</h5>
-                            
-
-
                         </div>
                         <div class="card-body">
                             
-                            <div id="CodigoQR">
-                                {{-- <img id="imgbuffer" src="" alt=""> --}}
-                                {{-- Aqui va el código QR --}}
-
+                            <div id="previewImage">
+                
                             </div>
+
                             <label for="" id="EtiquetaQR"></label>
                             <a id="btnDescargar" download="" class="btn btn-primary" style="width: 50%;" hidden><i class="bi-download"></i> Descargar</a>
                         </div>
@@ -102,14 +100,19 @@
     </div>
     
 
-
-
+    
+    <div id="CodigoQR" style="width: 400px; height: 250px;">
+        {{-- <img id="imgbuffer" src="" alt=""> --}}
+        {{-- Aqui va el código QR --}}
+    </div>
     <script src="../js/jquery.js"></script>
     <script src="../js/jquery-qrcode-0.18.0.js"></script>
     <script src="../js/jquery-qrcode-0.18.0.min.js"></script>
     {{-- <script src="../js/kjua/kjua.js"></script> --}}
 
     <script src="../js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    
 
     <script>
         datos = {};
@@ -120,17 +123,9 @@
             LimpiarCajas();
         });
         
-        $("#btnDescargar").on("click",function (e) {
-            e.preventDefault();
-           
-            var images = $('#CodigoQR img').prop('src');
-            var source = images;
-            var a = document.createElement('a');
-            a.download = "QRCode_"+$("#txtCodigo").val();
-            a.target = '_blank';
-            a.href= source;
-            a.click();
-        });
+
+        
+        var getCanvas; // global variable
 
         $("#btnBuscar").on('click', function(e) {
             e.preventDefault();
@@ -166,38 +161,42 @@
                             // image: source,
                         });
 
-                        // $("#CodigoQR").kjua({
-                        //     render:'image',
-                        //     text: url,
-                        //     // mode: 'image',
-                        //     mSize: 40,
-                        //     mPosx: 50,
-                        //     mPosy: 50,
-                        //     // image: 'data:img/regionloreto.png' 
-                        // })
 
                         $("#CodigoQR").css('display','flex');
                         $("#CodigoQR").css('justify-content','center');
                         $("#CodigoQR").css('align-items','center');
                         // $("#img-buffer").attr('src','img/regionloreto.png');
                     
-
+                        // Agregar imagen al DIV del QR
                         var image = new Image();
                         image.src = 'img/regionloreto.png';
                         image.id='buffer-img'
                         $('#CodigoQR').append(image);
 
+                        //Centra la imagen en el DIV del QR
                         $("#buffer-img").css('position','absolute');
                         $("#buffer-img").css('margin-left','auto');
                         $("#buffer-img").css('margin-right','auto');
-                        // $("#buffer-img").css('display', 'block');
-
                         $("#buffer-img").css('width','50px');
                         $("#buffer-img").css('height','50px');
-                        
+                        // $("#buffer-img").css('visibility','hidden');
 
                         $("#EtiquetaQR").text(url);
                         $("#btnDescargar").attr('hidden',false);
+
+                        var element = $("#CodigoQR"); // global variable
+                        $("#previewImage").html('');
+                        html2canvas(element, {
+                        onrendered: function (canvas) {
+                                $("#previewImage").append(canvas);
+                                getCanvas = canvas;
+                            }
+
+                        });
+                       const timeoutId = setTimeout(function(){
+                            $("#CodigoQR").html('');
+                        }, 2000);
+                       
                     }
                 });
 
@@ -212,6 +211,27 @@
 
 
         });
+
+
+        $("#btnDescargar").on("click",function (e) {
+
+            //End pone como imagen en otro DIV
+            var imgageData = getCanvas.toDataURL("image/png");
+            // Now browser starts downloading it instead of just showing it
+            var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+
+            $("#btnDescargar").attr("download", "QRCode_"+$("#txtCodigo").val()+".png").attr("href", newData);
+
+            // var images = $('previewImage').prop('src');
+            // var source = images;
+            // var a = document.createElement('a');
+            // a.download = "QRCode_"+$("#txtCodigo").val();
+            // a.target = '_blank';
+            // a.href= source;
+            // a.click();
+            });
+
+
         $("#txtCodigo").on("keyup", function() {
             LimpiarCajas();
         });
@@ -238,6 +258,8 @@
             $("#EtiquetaQR").text('');
             $("#btnDescargar").attr('hidden',true);
         }
+
+        
     </script>
 
 @endsection
