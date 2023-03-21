@@ -60,7 +60,7 @@
                         </div>
                         <div class="card-body">
                             
-                            <div id="previewImage">
+                            <div id="previewImage" style="border-top: 10px; border-color:white">
                 
                             </div>
 
@@ -101,10 +101,10 @@
     
 
     
-    <div id="CodigoQR" style="width: 400px; height: 250px;">
+    <div id="CodigoQR" style="width: 400px; height: 270px;">
         {{-- <img id="imgbuffer" src="" alt=""> --}}
         {{-- Aqui va el código QR --}}
-    </div>
+    </div>|
     <script src="../js/jquery.js"></script>
     <script src="../js/jquery-qrcode-0.18.0.js"></script>
     <script src="../js/jquery-qrcode-0.18.0.min.js"></script>
@@ -151,7 +151,7 @@
                             height: 150,
                             size: 250,
                             radius: 0.5,
-                            
+                            quiet: 3,
                             mSize: 50,
                             mPosX: 50,
                             mPosY: 50,
@@ -216,11 +216,11 @@
         $("#btnDescargar").on("click",function (e) {
 
             //End pone como imagen en otro DIV
-            var imgageData = getCanvas.toDataURL("image/png");
+            var imgageData = getCanvas.toDataURL("image/jpg");
             // Now browser starts downloading it instead of just showing it
-            var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+            var newData = imgageData.replace(/^data:image\/jpg/, "data:application/octet-stream");
 
-            $("#btnDescargar").attr("download", "QRCode_"+$("#txtCodigo").val()+".png").attr("href", newData);
+            $("#btnDescargar").attr("download", "QRCode_"+$("#txtCodigo").val()+".jpg").attr("href", newData);
 
             // var images = $('previewImage').prop('src');
             // var source = images;
