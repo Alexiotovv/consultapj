@@ -130,8 +130,6 @@
             LimpiarCajas();
         });
         
-
-        
         var getCanvas; // global variable
 
         $("#btnBuscar").on('click', function(e) {
