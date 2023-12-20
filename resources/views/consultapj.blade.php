@@ -58,18 +58,25 @@
                             {{-- <img src="../img/regionloreto.png" id="img-buffer"> --}}
                             <h5>Código QR Generado</h5>
                         </div>
+
+                        
                         <div class="card-body">
                             
                             <div id="previewImage" style="border-top: 10px; border-color:white">
-                
+                                
                             </div>
-
+                            
                             <label for="" id="EtiquetaQR"></label>
                             <a id="btnDescargar" download="" class="btn btn-primary" style="width: 50%;" hidden><i class="bi-download"></i> Descargar</a>
                         </div>
                     </div>
                 </div>
-
+                
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <a id="btnVerSitio" target="_blank" class="btn btn-primary" style="width: 250px;">Ver Proyecto en Sitio</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -141,6 +148,11 @@
                         $("#txtTipoInversion").val(element['tipoinversion']);
                         url = "https://ofi5.mef.gob.pe/inviertews/Repseguim/ResumF12B?codigo=" + $(
                             "#txtCodigo").val();
+
+                        //Poner url en el boton
+                        $("#btnVerSitio").attr("href", url);
+                        //Cierra url
+
                         $("#pagina").prop('src',url);
                         
                         $("#CodigoQR").qrcode({
@@ -239,7 +251,7 @@
             datos = {};
             $.ajax({
                 type: "GET",
-                url: "https://aplicaciones.regionloreto.gob.pe/aplicaciones/v2/Apirest/" + ano,
+                url: "https://aplicaciones.regionloreto.gob.pe/aplicaciones/v3/Apirest/" + ano,
                 dataType: "json",
                 beforeSend: function() {
                     $("#spinner").addClass("spinner-border");
