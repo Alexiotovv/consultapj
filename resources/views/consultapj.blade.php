@@ -68,7 +68,7 @@
                         
                         <div class="card-body">
                             
-                            <div id="previewImage" style="border-top: 10px; border-color:white">
+                            <div id="previewImage" style="border-top: 10px; border-color:white; overflow: scroll;">
                                 
                             </div>
                             <div class="row">
@@ -147,7 +147,7 @@
             e.preventDefault();
             // var cod_find='0';
             $("#CodigoQR").html("");
-            $("#EtiquetaQR").text('');
+            //$("#EtiquetaQR").text('');
             if ($("#txtCodigo").val() !== "") {
                 url = "https://ofi5.mef.gob.pe/inviertews/Repseguim/ResumF12B?codigo=" + $("#txtCodigo").val();
 
@@ -205,7 +205,7 @@
                         $("#buffer-img").css('height','50px');
                         // $("#buffer-img").css('visibility','hidden');
 
-                        $("#EtiquetaQR").text(url);
+                        //$("#EtiquetaQR").text(url);
                         $("#btnDescargar").attr('hidden',false);
 
                         var element = $("#CodigoQR"); // global variable
