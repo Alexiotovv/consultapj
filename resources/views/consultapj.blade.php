@@ -18,8 +18,7 @@
                                 <div class="col-sm-4">
                                     <label for="">Periodo</label>
                                     <select id="slPeriodo" class="form-select">
-                                        <option value="2023">2023</option>
-                                        <option value="2022">2022</option>
+
                                     </select>
                                     <div class="" id="spinner" role="status" style="position: fixed">
                                         
@@ -124,7 +123,7 @@
     <script>
         datos = {};
         var source = "";
-        ObtenerDatos("2023");
+        
         $("#slPeriodo").on('change', function() {
             ObtenerDatos($("#slPeriodo").val());
             LimpiarCajas();
@@ -242,9 +241,11 @@
             });
 
 
-        $("#txtCodigo").on("keyup", function() {
+        
+            $("#txtCodigo").on("keyup", function() {
             LimpiarCajas();
         });
+
         function ObtenerDatos(ano) {
             datos = {};
             $.ajax({
@@ -261,6 +262,7 @@
                 }
             });
         }
+
         function LimpiarCajas() {
             $("#txtNombreInversion").val('');
             $("#txtTipoInversion").val('');
@@ -268,7 +270,22 @@
             $("#EtiquetaQR").text('');
             $("#btnDescargar").attr('hidden',true);
         }
+        
+        CargarAnhos()
+        
+        function CargarAnhos() { 
+            //Obtener AñoActual
+            var _year = new Date().getFullYear();
+            var _year1= parseInt(_year)-1
+            var _year2= parseInt(_year)-2
+            $("#slPeriodo").append(
+                '<option value="'+_year+'">'+ _year +'</option>'+
+                '<option value="'+ _year1 +'">'+ _year1 +'</option>'+
+                '<option value="'+ _year2 +'">'+ _year2 +'</option>'
+            );
 
+            ObtenerDatos(_year);
+        }
         
     </script>
 
