@@ -5,8 +5,9 @@
             Búsqueda de Proyectos por código
         </div>
         <div class="card-body">
-            <div class="row">
+            <div class="row" style="justify-content: center;">
                 <div class="col-md-6">
+                    
                     <div class="card">
                         <div class="card-header" style="text-align: -webkit-center;">
                             <h5>Código de Proyecto</h5>
@@ -15,7 +16,7 @@
                             
 
                             <div class="row">
-                                <div class="col-sm-4">
+                                {{-- <div class="col-sm-4">
                                     <label for="">Periodo</label>
                                     <select id="slPeriodo" class="form-select">
 
@@ -23,8 +24,8 @@
                                     <div class="" id="spinner" role="status" style="position: fixed">
                                         
                                     </div>
-                                </div>
-                                <div class="col-sm-8">
+                                </div> --}}
+                                <div class="col-sm-12">
                                     <label for="">Ingrese Código</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="txtCodigo" style="100%;">
@@ -35,7 +36,7 @@
                                 
                             </div>
                             <br>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-sm-12">
                                     <label for="">Nombre Inversión:</label>
                                     <textarea type="text" id="txtNombreInversion" class="form-control" style="height: 130px;" disabled></textarea>
@@ -43,15 +44,21 @@
                                     <input type="text" id="txtTipoInversion" class="form-control" disabled>
                                 </div>
 
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
+
                 </div>
                 
                 
                 
 
+                
+            </div>
+            <div class="row" style="justify-content: center;">
                 <div class="col-md-6" style="text-align: -webkit-center;">
+                    
+                    {{-- CARD CÓDIGO QR --}}
                     <div class="card" style="min-height: 385px;">
                         <div class="card-header">
                             {{-- <img src="../img/regionloreto.png" id="img-buffer"> --}}
@@ -64,13 +71,18 @@
                             <div id="previewImage" style="border-top: 10px; border-color:white">
                                 
                             </div>
-                            
-                            <label for="" id="EtiquetaQR"></label>
-                            <a id="btnDescargar" download="" class="btn btn-primary" style="width: 50%;" hidden><i class="bi-download"></i> Descargar</a>
+                            <div class="row">
+                                <label for="" id="EtiquetaQR"></label>
+                            </div>
+                            <div class="row" style="justify-content: center;">
+                                <a id="btnDescargar" download="" class="btn btn-primary" style="width: 50%;" hidden><i class="bi-download"></i> Descargar</a>
+                            </div>
                         </div>
                     </div>
+
                 </div>
                 
+                {{-- BTN Ver Proyecto en el Sitio --}}
                 <div class="row">
                     <div class="col-md-12" style="text-align: center">
                         <a id="btnVerSitio" target="_blank" class="btn btn-primary" style="width: 250px;">Ver Proyecto en Sitio</a>
@@ -107,7 +119,7 @@
     
 
     
-    <div id="CodigoQR" style="width: 400px; height: 270px;">
+    <div id="CodigoQR" style="width: 500px; height: 470px;">
         {{-- <img id="imgbuffer" src="" alt=""> --}}
         {{-- Aqui va el código QR --}}
     </div>|
@@ -133,18 +145,21 @@
 
         $("#btnBuscar").on('click', function(e) {
             e.preventDefault();
-            
-            var cod_find='0';
+            // var cod_find='0';
             $("#CodigoQR").html("");
             $("#EtiquetaQR").text('');
             if ($("#txtCodigo").val() !== "") {
-                datos.forEach(element => {
-                    if (element['codigo'] == $("#txtCodigo").val()) {
-                        cod_find='1';
-                        $("#txtNombreInversion").val(element['nombredeinversion']);
-                        $("#txtTipoInversion").val(element['tipoinversion']);
-                        url = "https://ofi5.mef.gob.pe/inviertews/Repseguim/ResumF12B?codigo=" + $(
-                            "#txtCodigo").val();
+                url = "https://ofi5.mef.gob.pe/inviertews/Repseguim/ResumF12B?codigo=" + $("#txtCodigo").val();
+
+                // datos.forEach(element => {
+                // });
+
+                    // if (element['codigo'] == $("#txtCodigo").val()) {
+                    // }
+                    
+                        // cod_find='1';
+                        // $("#txtNombreInversion").val(element['nombredeinversion']);
+                        // $("#txtTipoInversion").val(element['tipoinversion']);
 
                         //Poner url en el boton
                         $("#btnVerSitio").attr("href", url);
@@ -154,11 +169,11 @@
                         
                         $("#CodigoQR").qrcode({
                             render: 'image',
-                            mode: 4, // 0: normal // 1: label strip // 2: label box // 3: image strip // 4: image box
+                            mode: 1, // 0: normal // 1: label strip // 2: label box // 3: image strip // 4: image box
                             label: "",
-                            width: 150,
-                            height: 150,
-                            size: 250,
+                            // width: 350,
+                            // height: 350,
+                            size: 400,
                             radius: 0.5,
                             quiet: 3,
                             mSize: 50,
@@ -206,13 +221,15 @@
                             $("#CodigoQR").html('');
                         }, 2000);
                        
-                    }
-                });
+                    
+                
+                
+                
 
-                if (cod_find=='0') {
-                    $("#msjeContenido").text('El código ingresado no existe en el periodo');
-                    $("#modalMensaje").modal('show');
-                }
+                // if (cod_find=='0') {
+                //     $("#msjeContenido").text('El código ingresado no existe en el periodo');
+                //     $("#modalMensaje").modal('show');
+                // }
 
             } else {
                 alert("Ingrese un código");
@@ -264,8 +281,8 @@
         }
 
         function LimpiarCajas() {
-            $("#txtNombreInversion").val('');
-            $("#txtTipoInversion").val('');
+            // $("#txtNombreInversion").val('');
+            // $("#txtTipoInversion").val('');
             $("#CodigoQR").html("");
             $("#EtiquetaQR").text('');
             $("#btnDescargar").attr('hidden',true);
